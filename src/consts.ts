@@ -21,5 +21,4 @@ export const LUMA_CALENDAR_ID = 'cal-0bDgxCEdnFr1W8O';
 export const NAV = [
   { label: 'Events', href: '/events/' },
   { label: 'About', href: '/about/' },
-  { label: 'Code of Conduct', href: '/code-of-conduct/' },
 ] as const;

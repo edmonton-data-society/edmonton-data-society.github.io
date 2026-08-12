@@ -55,13 +55,11 @@ the fallback and archive. Delete `2026-09-example-meetup.md` once real events ex
    `https://lu.ma/embed/calendar/<id>/events`. Verify it renders; if Luma has
    changed the embed format, copy the current snippet from the calendar's
    "Share → Embed" panel.
-3. **Code of Conduct.** `/code-of-conduct` is a draft — organizers should review
-   and adopt it (or point at an existing one) and remove the draft notice.
-4. **Newsletter.** Not built. GitHub Pages can't process forms; use Buttondown,
+3. **Newsletter.** Not built. GitHub Pages can't process forms; use Buttondown,
    Mailchimp, or a Luma subscribe link if you want one. The GoDaddy site being
    replaced had a signup form, so any existing subscriber list should be
    exported from GoDaddy before that site is torn down.
-5. **Analytics.** None wired in. Add a privacy-friendly option (Plausible,
+4. **Analytics.** None wired in. Add a privacy-friendly option (Plausible,
    GoatCounter) in `BaseLayout.astro` if organizers want numbers.
 
 ## Domain
