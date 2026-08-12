@@ -1,0 +1,42 @@
+---
+import { LINKS, SITE } from '../consts';
+
+const year = new Date().getFullYear();
+const social = [
+  { label: 'Discord', href: LINKS.discord },
+  { label: 'LinkedIn', href: LINKS.linkedin },
+  { label: 'GitHub', href: LINKS.github },
+  { label: 'Luma', href: LINKS.luma },
+];
+---
+
+<footer class="bg-ink text-stone-400">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="flex flex-wrap items-start justify-between gap-8">
+      <div class="max-w-sm">
+        <p class="text-lg font-semibold text-white">{SITE.name}</p>
+        <p class="mt-2 text-sm">{SITE.location}</p>
+        <p class="mt-4 text-sm">
+          <a href={`mailto:${SITE.email}`} class="hover:text-brand-300 underline underline-offset-4">
+            {SITE.email}
+          </a>
+        </p>
+      </div>
+
+      <nav aria-label="Social" class="flex flex-col gap-2 text-sm">
+        {
+          social.map((item) => (
+            <a href={item.href} class="hover:text-brand-300">
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <p class="mt-12 text-xs text-stone-500">
+      &copy; {year} {SITE.name}. Site source on{' '}
+      <a href={LINKS.github} class="underline underline-offset-4">GitHub</a>.
+    </p>
+  </div>
+</footer>

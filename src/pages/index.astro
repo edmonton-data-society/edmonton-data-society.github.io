@@ -1,0 +1,164 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EventCard from '../components/EventCard.astro';
+import Faq from '../components/Faq.astro';
+import LumaCalendar from '../components/LumaCalendar.astro';
+import { LINKS, SITE } from '../consts';
+
+const now = new Date();
+const upcoming = (await getCollection('events'))
+  .filter((event) => event.data.date >= now)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+
+const whatWeDo = [
+  {
+    title: 'Talks & demos',
+    body: 'Members present projects, research, and post-mortems — from applied ML in production to the analysis you did over a weekend.',
+  },
+  {
+    title: 'Workshops',
+    body: 'Hands-on sessions on the tools people actually use: Python, SQL, cloud data platforms, LLM tooling, and visualization.',
+  },
+  {
+    title: 'Networking',
+    body: 'Practitioners, academics, and students in one room. Most people come for the talk and stay for the hallway track.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Who is this for?',
+    answer:
+      'Anyone in or around Edmonton working with data — professionals, academics, and students. No experience bar; curiosity is enough.',
+  },
+  {
+    question: 'Is there a membership fee?',
+    answer: 'No. Events are free unless a venue or catering cost forces otherwise, which we state up front.',
+  },
+  {
+    question: 'Where do meetups happen?',
+    answer:
+      'Venues around Edmonton — university spaces, co-working spots, and host companies. The exact location is on each event listing.',
+  },
+  {
+    question: 'How often do you meet?',
+    answer: 'Roughly monthly. The Luma calendar is the source of truth for what is next.',
+  },
+  {
+    question: 'Can I present?',
+    answer:
+      'Yes, and we would like you to. Bring a talk, a lightning demo, or a problem you are stuck on — reach out on Discord to get on the schedule.',
+  },
+  {
+    question: 'Can my company host or sponsor?',
+    answer:
+      'Yes. We are looking for venues and sponsors for food. Email us and we will work out the details.',
+  },
+];
+---
+
+<BaseLayout>
+  <section class="border-b border-stone-200 dark:border-stone-800">
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
+      <div>
+        <p class="text-accent text-sm font-semibold tracking-widest uppercase">
+          {SITE.location}
+        </p>
+        <h1 class="mt-4 text-4xl leading-tight sm:text-5xl">
+          <!-- Large text clears AA at 3:1, so the headline keeps the logo orange. -->
+          Edmonton Data Society: <span class="text-brand-500 dark:text-brand-400">Connect & Learn</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg">
+          A community of data science professionals, academics, and students who meet regularly to
+          share work, network, and learn from each other.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="/events/"
+            class="bg-brand-700 hover:bg-brand-800 rounded-full px-6 py-3 font-medium text-white transition-colors"
+          >
+            See upcoming events
+          </a>
+          <a
+            href={LINKS.discord}
+            class="hover:border-brand-600 hover:text-accent rounded-full border border-stone-300 px-6 py-3 font-medium transition-colors dark:border-stone-700"
+          >
+            Join our Discord
+          </a>
+        </div>
+      </div>
+
+      <div class="mx-auto w-full max-w-lg lg:mx-0">
+        <img
+          src="/logo.png"
+          alt=""
+          width="1292"
+          height="608"
+          class="w-full rounded-3xl shadow-sm"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <h2 class="text-3xl">What we do</h2>
+    <div class="mt-10 grid gap-8 md:grid-cols-3">
+      {
+        whatWeDo.map((item) => (
+          <div>
+            <h3 class="text-xl">{item.title}</h3>
+            <p class="mt-3 text-sm">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-20">
+    <div class="flex flex-wrap items-baseline justify-between gap-4">
+      <h2 class="text-3xl">Upcoming</h2>
+      <a href="/events/" class="text-accent text-sm underline underline-offset-4">
+        All events
+      </a>
+    </div>
+
+    {
+      upcoming.length > 0 ? (
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          {upcoming.map((event) => (
+            <EventCard {...event.data} />
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8">
+          <LumaCalendar height={480} />
+        </div>
+      )
+    }
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-20">
+    <h2 class="text-3xl">Questions</h2>
+    <div class="mt-8 max-w-3xl">
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <section class="bg-brand-50 dark:bg-stone-900">
+    <div class="mx-auto max-w-3xl px-6 py-16 text-center">
+      <h2 class="text-3xl">Stay connected</h2>
+      <p class="mt-4">
+        Everything happens on Discord — event announcements, talk proposals, and the running
+        conversation between meetups.
+      </p>
+      <a
+        href={LINKS.discord}
+        class="bg-brand-700 hover:bg-brand-800 mt-8 inline-block rounded-full px-6 py-3 font-medium text-white transition-colors"
+      >
+        Join our Discord
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import { LINKS, LUMA_CALENDAR_ID } from '../consts';
+
+interface Props {
+  height?: number;
+}
+
+const { height = 450 } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-2xl border border-stone-200 dark:border-stone-800">
+  <iframe
+    src={`https://lu.ma/embed/calendar/${LUMA_CALENDAR_ID}/events`}
+    title="Upcoming Edmonton Data Society events"
+    width="100%"
+    height={height}
+    loading="lazy"
+    allowfullscreen
+    style="border: none;"></iframe>
+</div>
+<p class="mt-3 text-sm text-stone-500">
+  Calendar not loading?{' '}
+  <a href={LINKS.luma} class="underline underline-offset-4">Open it on Luma</a>.
+</p>

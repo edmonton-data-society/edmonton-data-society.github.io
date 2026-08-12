@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { LINKS, SITE } from '../consts';
+---
+
+<BaseLayout title="About" description={SITE.description}>
+  <div class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="text-4xl">About</h1>
+
+    <div class="mt-8 space-y-6">
+      <p>
+        The Edmonton Data Society is a group of data science enthusiasts who meet regularly to
+        discuss data science topics, network, and learn from each other. We are professionals,
+        academics, and students who are passionate about data science and its applications.
+      </p>
+      <p>
+        Meetups are informal: a talk or workshop, questions, and time to actually talk to each
+        other. Everything is free to attend and open to anyone in the Edmonton area.
+      </p>
+    </div>
+
+    <h2 class="mt-14 text-2xl">Get involved</h2>
+    <ul class="mt-6 space-y-4">
+      <li>
+        <strong class="text-ink dark:text-white">Give a talk.</strong> A 20-minute talk or a 5-minute
+        lightning demo — a project, a paper you liked, or something that went wrong. Pitch it on
+        <a href={LINKS.discord} class="text-accent underline underline-offset-4">Discord</a>.
+      </li>
+      <li>
+        <strong class="text-ink dark:text-white">Host a meetup.</strong> If your company has a room
+        for 30–50 people, we would like to hear from you.
+      </li>
+      <li>
+        <strong class="text-ink dark:text-white">Help run it.</strong> Organizing, comms, and this
+        website are all volunteer work. The site source is on
+        <a href={LINKS.github} class="text-accent underline underline-offset-4">GitHub</a>.
+      </li>
+    </ul>
+
+    <h2 class="mt-14 text-2xl">Contact</h2>
+    <p class="mt-4">
+      Email <a href={`mailto:${SITE.email}`} class="text-accent underline underline-offset-4">
+        {SITE.email}
+      </a> or find us on <a href={LINKS.discord} class="text-accent underline underline-offset-4">
+        Discord
+      </a> and <a href={LINKS.linkedin} class="text-accent underline underline-offset-4">
+        LinkedIn
+      </a>.
+    </p>
+  </div>
+</BaseLayout>
