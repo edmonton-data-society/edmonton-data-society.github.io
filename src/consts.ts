@@ -5,7 +5,7 @@ export const SITE = {
   description:
     'A community of data science professionals, academics, and students in Edmonton, Alberta who meet regularly to share work, network, and learn from each other.',
   location: 'Edmonton, Alberta',
-  email: 'hello@edmontondatasociety.ca',
+  email: 'edmontondatasociety@gmail.com',
 } as const;
 
 export const LINKS = {

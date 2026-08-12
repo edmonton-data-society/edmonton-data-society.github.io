@@ -49,21 +49,50 @@ the fallback and archive. Delete `2026-09-example-meetup.md` once real events ex
 
 ## Before this goes live
 
-1. **Domain.** `public/CNAME` and `site:` in `astro.config.mjs` both say
-   `edmontondatasociety.ca` — replace with the real domain in both places, then
-   point a `CNAME` DNS record at `<org>.github.io` (or four `A` records to the
-   GitHub Pages IPs for an apex domain) and enable HTTPS in repo Settings → Pages.
-2. **Contact email.** `SITE.email` in `src/consts.ts` is a guess — set a real inbox.
-3. **Luma embed URL.** `LumaCalendar.astro` builds
+1. **DNS cutover.** See "Domain" below — `edmontondatasociety.ca` currently
+   serves a different site.
+2. **Luma embed URL.** `LumaCalendar.astro` builds
    `https://lu.ma/embed/calendar/<id>/events`. Verify it renders; if Luma has
    changed the embed format, copy the current snippet from the calendar's
    "Share → Embed" panel.
-4. **Code of Conduct.** `/code-of-conduct` is a draft — organizers should review
+3. **Code of Conduct.** `/code-of-conduct` is a draft — organizers should review
    and adopt it (or point at an existing one) and remove the draft notice.
-5. **Newsletter.** Not built. GitHub Pages can't process forms; use Buttondown,
-   Mailchimp, or a Luma subscribe link if you want one.
-6. **Analytics.** None wired in. Add a privacy-friendly option (Plausible,
+4. **Newsletter.** Not built. GitHub Pages can't process forms; use Buttondown,
+   Mailchimp, or a Luma subscribe link if you want one. The GoDaddy site being
+   replaced had a signup form, so any existing subscriber list should be
+   exported from GoDaddy before that site is torn down.
+5. **Analytics.** None wired in. Add a privacy-friendly option (Plausible,
    GoatCounter) in `BaseLayout.astro` if organizers want numbers.
+
+## Domain
+
+`edmontondatasociety.ca`, registered through GoDaddy (nameservers
+`ns23/ns24.domaincontrol.com`). It is set in two places that must stay in sync:
+`public/CNAME` and `site:` in `astro.config.mjs`.
+
+As of 2026-08-12 the domain still points at a **GoDaddy Website Builder**
+"Coming soon" page. Cutting over means repointing DNS away from it — the
+GoDaddy site stops being reachable, so export anything worth keeping first
+(the contact-form submissions and email signups).
+
+In GoDaddy DNS, replace the existing apex `A` records with GitHub Pages':
+
+```
+A     @     185.199.108.153
+A     @     185.199.109.153
+A     @     185.199.110.153
+A     @     185.199.111.153
+CNAME www   <org>.github.io.
+```
+
+Add the matching `AAAA` records (`2606:50c0:8000::153` through
+`8003::153`) if you want IPv6. Verify these against
+<https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site>
+before applying — GitHub has changed them before.
+
+Then in repo Settings → Pages set the custom domain and tick **Enforce HTTPS**
+(the certificate takes a few minutes to issue). Propagation can take up to an
+hour, during which the old GoDaddy page may still appear for some visitors.
 
 ## Deploy
 
