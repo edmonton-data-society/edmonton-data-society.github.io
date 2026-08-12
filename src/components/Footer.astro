@@ -1,5 +1,5 @@
 ---
-import { LINKS, SITE } from '../consts';
+import { LINKS, REPO_URL, SITE } from '../consts';
 
 const year = new Date().getFullYear();
 const social = [
@@ -36,7 +36,7 @@ const social = [
 
     <p class="mt-12 text-xs text-stone-500">
       &copy; {year} {SITE.name}. Site source on{' '}
-      <a href={LINKS.github} class="underline underline-offset-4">GitHub</a>.
+      <a href={REPO_URL} class="underline underline-offset-4">GitHub</a>.
     </p>
   </div>
 </footer>

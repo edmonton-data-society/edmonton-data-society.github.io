@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { LINKS, SITE } from '../consts';
+import { LINKS, REPO_URL, SITE } from '../consts';
 ---
 
 <BaseLayout title="About" description={SITE.description}>
@@ -33,7 +33,7 @@ import { LINKS, SITE } from '../consts';
       <li>
         <strong class="text-ink dark:text-white">Help run it.</strong> Organizing, comms, and this
         website are all volunteer work. The site source is on{' '}
-        <a href={LINKS.github} class="text-accent underline underline-offset-4">GitHub</a>.
+        <a href={REPO_URL} class="text-accent underline underline-offset-4">GitHub</a>.
       </li>
     </ul>
 

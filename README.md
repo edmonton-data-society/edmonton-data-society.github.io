@@ -12,7 +12,7 @@ npm run preview
 npm run check    # type-check .astro files
 ```
 
-Requires Node 20+.
+Requires Node 22.12+ (Astro 7's floor).
 
 ## Layout
 
