@@ -16,7 +16,8 @@ export const LINKS = {
 } as const;
 
 /** Where this site's source lives — distinct from the community org above. */
-export const REPO_URL = 'https://github.com/edmonton-data-society/eds';
+export const REPO_URL =
+  'https://github.com/edmonton-data-society/edmonton-data-society.github.io';
 
 /** Luma calendar id, used for the embedded upcoming-events widget. */
 export const LUMA_CALENDAR_ID = 'cal-0bDgxCEdnFr1W8O';

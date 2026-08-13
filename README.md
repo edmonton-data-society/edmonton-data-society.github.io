@@ -49,8 +49,8 @@ the fallback and archive. Delete `2026-09-example-meetup.md` once real events ex
 
 ## Before this goes live
 
-1. **DNS cutover.** See "Domain" below — `edmontondatasociety.ca` currently
-   serves a different site.
+1. **Custom domain.** Optional — the site is live on GitHub Pages already. See
+   "Domain" below; `edmontondatasociety.ca` currently serves a different site.
 2. **Luma embed URL.** `LumaCalendar.astro` builds
    `https://lu.ma/embed/calendar/<id>/events`. Verify it renders; if Luma has
    changed the embed format, copy the current snippet from the calendar's
@@ -62,40 +62,50 @@ the fallback and archive. Delete `2026-09-example-meetup.md` once real events ex
 4. **Analytics.** None wired in. Add a privacy-friendly option (Plausible,
    GoatCounter) in `BaseLayout.astro` if organizers want numbers.
 
+## Where it's served
+
+<https://edmonton-data-society.github.io> — a GitHub Pages **organization
+site**, which is why the repo is named `edmonton-data-society.github.io`. That
+naming is what makes Pages serve it at the domain root; renaming the repo would
+move it to a `/subpath` and break every absolute asset URL.
+
 ## Domain
 
-`edmontondatasociety.ca`, registered through GoDaddy (nameservers
-`ns23/ns24.domaincontrol.com`). It is set in two places that must stay in sync:
-`public/CNAME` and `site:` in `astro.config.mjs`.
+`edmontondatasociety.ca` is registered through GoDaddy (nameservers
+`ns23/ns24.domaincontrol.com`) and, as of 2026-08-13, still serves a **GoDaddy
+Website Builder** "Coming soon" page — not this site.
 
-As of 2026-08-12 the domain still points at a **GoDaddy Website Builder**
-"Coming soon" page. Cutting over means repointing DNS away from it — the
-GoDaddy site stops being reachable, so export anything worth keeping first
-(the contact-form submissions and email signups).
+Pointing it here is optional and not done yet. When you want it:
 
-In GoDaddy DNS, replace the existing apex `A` records with GitHub Pages':
+1. Export anything worth keeping from the GoDaddy site first (contact-form
+   submissions, email signups) — repointing DNS makes it unreachable.
+2. In GoDaddy DNS, replace the apex `A` records with GitHub Pages':
 
-```
-A     @     185.199.108.153
-A     @     185.199.109.153
-A     @     185.199.110.153
-A     @     185.199.111.153
-CNAME www   <org>.github.io.
-```
+   ```
+   A     @     185.199.108.153
+   A     @     185.199.109.153
+   A     @     185.199.110.153
+   A     @     185.199.111.153
+   CNAME www   edmonton-data-society.github.io.
+   ```
 
-Add the matching `AAAA` records (`2606:50c0:8000::153` through
-`8003::153`) if you want IPv6. Verify these against
-<https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site>
-before applying — GitHub has changed them before.
+   Add the matching `AAAA` records (`2606:50c0:8000::153` through `8003::153`)
+   for IPv6. Verify all of these against
+   <https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site>
+   first — GitHub has changed them before.
+3. Recreate `public/CNAME` containing `edmontondatasociety.ca` (it was removed
+   so it couldn't hijack the Pages URL before DNS was ready).
+4. Change `site:` in `astro.config.mjs` to `https://edmontondatasociety.ca` so
+   canonical and Open Graph URLs follow.
+5. Repo Settings → Pages: set the custom domain and tick **Enforce HTTPS**.
 
-Then in repo Settings → Pages set the custom domain and tick **Enforce HTTPS**
-(the certificate takes a few minutes to issue). Propagation can take up to an
-hour, during which the old GoDaddy page may still appear for some visitors.
+Propagation can take up to an hour, during which some visitors still see the
+GoDaddy page.
 
 ## Deploy
 
 `.github/workflows/deploy.yml` builds and publishes on every push to `main`.
-Enable it once: repo Settings → Pages → Source → **GitHub Actions**.
+Pages source is already set to **GitHub Actions**.
 
 ### Scheduled rebuilds
 
