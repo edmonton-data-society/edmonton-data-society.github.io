@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Workers
 
 on:
   push:
@@ -7,29 +7,26 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: deploy
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: withastro/action@v3
-        with:
-          # The action defaults to Node 20; Astro 7 requires >=22.12.
-          node-version: 22
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          # Astro 7 requires >=22.12.
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Uses the wrangler already installed from package.json by `npm ci`.
+      # account_id comes from wrangler.jsonc.
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy
